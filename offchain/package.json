@@ -1,9 +1,9 @@
 {
-  "name": "next-app-template",
+  "name": "cardano-sandbox-25-offchain",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
