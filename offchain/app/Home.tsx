@@ -1,48 +1,76 @@
+import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link } from "@heroui/link";
-import { Snippet } from "@heroui/snippet";
-import { Code } from "@heroui/code";
-import { button as buttonStyles } from "@heroui/theme";
+import { Lucid } from "@lucid-evolution/lucid";
 
-import { siteConfig } from "@/config/site";
+import { useWallet } from "@/components/contexts/wallet/WalletContext";
+import { network, provider } from "@/config/lucid";
+import { handleError } from "@/components/utils";
 import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+import WalletConnectors from "@/components/pages/home/WalletConnectors";
+import ConnectedDashboard from "@/components/pages/home/ConnectedDashboard";
+import DisconnectButton from "@/components/pages/DisconnectButton";
 
 export default function Home() {
+  const [walletConnection, setWalletConnection] = useWallet();
+  const { address } = walletConnection;
+
+  let isInit = false;
+
+  useEffect(() => {
+    if (isInit) return;
+    else isInit = true;
+
+    Lucid(provider, network)
+      .then((lucid) => {
+        setWalletConnection((walletConnection) => {
+          return { ...walletConnection, lucid };
+        });
+      })
+      .catch(handleError);
+  }, []);
+
+  if (address)
+    return (
+      <section className="relative flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+        <ConnectedDashboard />
+        <DisconnectButton />
+        <ToastContainer position="bottom-right" theme="dark" />
+      </section>
+    );
+
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+      {/* Title */}
       <div className="inline-block max-w-xl text-center justify-center">
-        <span className={title()}>Make&nbsp;</span>
-        <span className={title({ color: "violet" })}>beautiful&nbsp;</span>
-        <br />
-        <span className={title()}>websites regardless of your design experience.</span>
-        <div className={subtitle({ class: "mt-4" })}>Beautiful, fast and modern React UI library.</div>
+        <span className={title()}>Connect&nbsp;</span>
+        <span className={title({ color: "violet" })}>Cardano&nbsp;</span>
+        <span className={title()}>Wallet</span>
       </div>
 
-      <div className="flex gap-3">
-        <Link
-          isExternal
-          className={buttonStyles({
-            color: "primary",
-            radius: "full",
-            variant: "shadow",
-          })}
-          href={siteConfig.links.docs}
-        >
-          Documentation
-        </Link>
-        <Link isExternal className={buttonStyles({ variant: "bordered", radius: "full" })} href={siteConfig.links.github}>
-          <GithubIcon size={20} />
-          GitHub
-        </Link>
+      {/* Wallet Connectors */}
+      <div className="flex justify-center mt-4 w-full">
+        <WalletConnectors />
       </div>
 
-      <div className="mt-8">
-        <Snippet hideCopyButton hideSymbol variant="bordered">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
-          </span>
-        </Snippet>
+      {/* Subtitle */}
+      <div className="inline-block max-w-xl text-center justify-center">
+        <div className={subtitle({ class: "mt-4" })}>
+          See the{" "}
+          <Link
+            isExternal
+            className="text-lg lg:text-xl"
+            href="https://developers.cardano.org/showcase/?tags=wallet"
+          >
+            list of wallets
+          </Link>{" "}
+          built for Cardano
+        </div>
       </div>
+
+      {/* Toast */}
+      <ToastContainer position="bottom-right" theme="dark" />
     </section>
   );
 }

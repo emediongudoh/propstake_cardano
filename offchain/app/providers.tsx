@@ -7,6 +7,8 @@ import { HeroUIProvider } from "@heroui/system";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
+import WalletProvider from "@/components/contexts/wallet/WalletProvider";
+
 export interface ProvidersProps {
   children: React.ReactNode;
   themeProps?: ThemeProviderProps;
@@ -14,16 +16,24 @@ export interface ProvidersProps {
 
 declare module "@react-types/shared" {
   interface RouterConfig {
-    routerOptions: NonNullable<Parameters<ReturnType<typeof useRouter>["push"]>[1]>;
+    routerOptions: NonNullable<
+      Parameters<ReturnType<typeof useRouter>["push"]>[1]
+    >;
   }
 }
 
 export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
+  const Children = () => children;
+
   return (
     <HeroUIProvider navigate={router.push}>
-      <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+      <NextThemesProvider {...themeProps}>
+        <WalletProvider>
+          <Children />
+        </WalletProvider>
+      </NextThemesProvider>
     </HeroUIProvider>
   );
 }
