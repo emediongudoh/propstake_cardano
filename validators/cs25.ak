@@ -1,4 +1,6 @@
+use aiken/cbor
 use aiken/collection/list
+use aiken/crypto
 use aiken/primitive/bytearray
 use cardano/address.{Script}
 use cardano/assets.{PolicyId}
