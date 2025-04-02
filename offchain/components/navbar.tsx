@@ -13,7 +13,7 @@ import CardanoLogo from "./CardanoLogo";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { GithubIcon } from "@/components/icons";
+import { GithubIcon, TwitterIcon } from "@/components/icons";
 
 export const Navbar = () => {
   return (
@@ -50,6 +50,13 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <Link
             isExternal
+            aria-label="Twitter"
+            href="https://x.com/UnifiedCardano"
+          >
+            <TwitterIcon className="text-default-500" />
+          </Link>
+          <Link
+            isExternal
             aria-label="Github"
             href="https://github.com/apcs-25/cardano_sandbox_25"
           >
@@ -60,6 +67,13 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <Link
+          isExternal
+          aria-label="Twitter"
+          href="https://x.com/UnifiedCardano"
+        >
+          <TwitterIcon className="text-default-500" />
+        </Link>
         <Link
           isExternal
           aria-label="Github"
