@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Link } from "@heroui/link";
 import { ToastContainer } from "react-toastify";
 
@@ -11,18 +10,9 @@ import DisconnectButton from "@/components/pages/DisconnectButton";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Mint() {
-  const router = useRouter();
   const [{ address }] = useWallet();
 
-  let isPushed = false;
-
-  useEffect(() => {
-    if (!address && !isPushed) {
-      router.push("/");
-      isPushed = true;
-    }
-  }, [address]);
-  if (!address) return <></>;
+  if (!address) return redirect("/");
 
   return (
     <>
