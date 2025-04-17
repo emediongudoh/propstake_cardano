@@ -1,6 +1,6 @@
 name = "apcs-25/cardano_sandbox_25"
 version = "0.0.0"
-compiler = "v1.1.15"
+compiler = "v1.1.13"
 plutus = "v3"
 license = "Apache-2.0"
 description = "Aiken contracts for project 'apcs-25/cardano_sandbox_25'"
