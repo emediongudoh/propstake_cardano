@@ -47,20 +47,9 @@ export default function RootLayout({
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex h-screen flex-col">
             <Navbar />
-            <main className="container mx-auto max-w-7xl flex-grow px-6 pt-16">
+            <main className="container mx-auto max-w-7xl flex-grow px-6 pt-1">
               {children}
             </main>
-            <footer className="flex w-full items-center justify-center py-3">
-              <Link
-                isExternal
-                className="flex items-center gap-1 text-current"
-                href="mailto:ariady.putra@gmail.com"
-                title="ariady.putra@gmail.com"
-              >
-                <span className="text-default-600">Developed by</span>
-                <p className="text-primary">Ariady Putra</p>
-              </Link>
-            </footer>
           </div>
         </Providers>
       </body>

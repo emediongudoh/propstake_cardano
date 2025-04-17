@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background: #090021 !important;
+  color: #e0e0e0;
+}
+
+@layer utilities {
+  .site-button {
+    @apply cursor-pointer rounded-lg bg-[#6900EA] px-4 py-2 text-white hover:opacity-80;
+  }
+
+  .delete-button {
+    @apply cursor-pointer rounded-lg bg-red-700 px-4 py-2 text-white hover:opacity-80;
+  }
+
+  .site-money {
+    @apply text-[#00FF7F];
+  }
+}

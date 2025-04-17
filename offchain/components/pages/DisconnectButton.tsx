@@ -22,12 +22,5 @@ export default function DisconnectButton() {
     });
   }
 
-  return (
-    <Button
-      className="absolute right-0 top-0 -translate-y-full"
-      onPress={disconnect}
-    >
-      Disconnect
-    </Button>
-  );
+  return <Button onPress={disconnect}>Disconnect</Button>;
 }

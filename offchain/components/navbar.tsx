@@ -1,103 +1,57 @@
-import {
-  Navbar as HeroUINavbar,
-  NavbarContent,
-  NavbarBrand,
-  NavbarItem,
-} from "@heroui/navbar";
-import { Link } from "@heroui/link";
-import { link as linkStyles } from "@heroui/theme";
-import NextLink from "next/link";
-import clsx from "clsx";
+"use client";
 
-import CardanoLogo from "./CardanoLogo";
+import { Button } from "@heroui/button";
 
+// Local imports
 import { siteConfig } from "@/config/site";
-import { ThemeSwitch } from "@/components/theme-switch";
-import { GithubIcon, TwitterIcon } from "@/components/icons";
+import PropstakeLogo from "./PropstakeLogo";
+import { NavItem } from "./nav-item";
+import WalletConnectors from "@/components/pages/home/WalletConnectors";
+import { useWallet } from "./contexts/wallet/WalletContext";
+import { useEffect } from "react";
+import { Lucid } from "@lucid-evolution/lucid";
+import DisconnectButton from "./pages/DisconnectButton";
+import { network, provider } from "@/config/lucid";
+import { handleError } from "@/components/utils";
 
 export const Navbar = () => {
+  const [walletConnection, setWalletConnection] = useWallet();
+  const { address } = walletConnection;
+
+  let isInit = false;
+
+  useEffect(() => {
+    if (isInit) return;
+    else isInit = true;
+
+    Lucid(provider, network)
+      .then(lucid => {
+        setWalletConnection(walletConnection => {
+          return { ...walletConnection, lucid };
+        });
+      })
+      .catch(handleError);
+  }, []);
+
   return (
-    <HeroUINavbar
-      maxWidth="xl"
-      position="sticky"
-    >
-      <NavbarContent
-        className="basis-1/5 sm:basis-full"
-        justify="start"
-      >
-        <NavbarBrand
-          as="li"
-          className="max-w-fit gap-3"
-        >
-          <NextLink
-            className="flex items-center justify-start gap-1"
-            href="/"
-          >
-            <CardanoLogo />
-            <p className="font-bold text-inherit">{"Cardano Sandbox '25"}</p>
-          </NextLink>
-        </NavbarBrand>
-        <ul className="ml-2 hidden justify-start gap-4 lg:flex">
-          {siteConfig.navItems.map(item => (
-            <NavbarItem key={item.href}>
-              <NextLink
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:font-medium data-[active=true]:text-primary"
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
+    <header className="sticky top-0 z-50 bg-[#090021]/80 p-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between">
+        {/* Propstake logo */}
+        <PropstakeLogo />
+
+        {/* Nav items */}
+        <nav className="hidden space-x-8 text-sm text-slate-300 md:flex">
+          {siteConfig.navItems.map((item, index) => (
+            <NavItem
+              key={index}
+              label={item.label}
+              href={item.href}
+            />
           ))}
-        </ul>
-      </NavbarContent>
+        </nav>
 
-      <NavbarContent
-        className="hidden basis-1/5 sm:flex sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden gap-2 sm:flex">
-          <Link
-            isExternal
-            aria-label="Twitter"
-            href="https://x.com/UnifiedCardano"
-          >
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link
-            isExternal
-            aria-label="Github"
-            href="https://github.com/apcs-25/cardano_sandbox_25"
-          >
-            <GithubIcon className="text-default-500" />
-          </Link>
-          <ThemeSwitch />
-        </NavbarItem>
-      </NavbarContent>
-
-      <NavbarContent
-        className="basis-1 pl-4 sm:hidden"
-        justify="end"
-      >
-        <Link
-          isExternal
-          aria-label="Twitter"
-          href="https://x.com/UnifiedCardano"
-        >
-          <TwitterIcon className="text-default-500" />
-        </Link>
-        <Link
-          isExternal
-          aria-label="Github"
-          href="https://github.com/apcs-25/cardano_sandbox_25"
-        >
-          <GithubIcon className="text-default-500" />
-        </Link>
-        <ThemeSwitch />
-      </NavbarContent>
-    </HeroUINavbar>
+        {address ? <DisconnectButton /> : <WalletConnectors />}
+      </div>
+    </header>
   );
 };
