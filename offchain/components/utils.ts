@@ -76,7 +76,7 @@ export function handleError(error: any) {
 
     toast(
       `${failureTrace ?? failureInfo ?? failureMessage ?? info ?? message ?? error}`,
-      { type: "error" },
+      { type: "error" }
     );
     console.error(failureCause ?? { error });
   }

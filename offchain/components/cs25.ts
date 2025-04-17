@@ -51,7 +51,7 @@ export async function queryAddressAssets({ lucid, address }: WalletConnection) {
 
   const usrTokens = await koios.queryAddressAssets(
     `${address}`,
-    Script.PolicyID,
+    Script.PolicyID
   );
   const refTokens = usrTokens.map(([policyID, assetName]: string[]) => {
     return toUnit(policyID, assetName.slice(8), 100);
@@ -65,7 +65,7 @@ export async function queryAddressAssets({ lucid, address }: WalletConnection) {
   let tokens: Token[] = [];
 
   for (const refToken of refTokens) {
-    const utxo = utxos.find((utxo) => utxo.assets[refToken]);
+    const utxo = utxos.find(utxo => utxo.assets[refToken]);
 
     if (!utxo) continue; // should never happen
 
@@ -86,7 +86,7 @@ export async function queryAddressAssets({ lucid, address }: WalletConnection) {
 
 export async function mint(
   token: { name: string; image: string },
-  { lucid, walletApi }: WalletConnection,
+  { lucid, walletApi }: WalletConnection
 ) {
   try {
     if (!lucid) throw "Uninitialized Lucid";
@@ -97,7 +97,7 @@ export async function mint(
 
     const cip68: Cip68Metadatum = {
       metadata: new Map(
-        Object.entries(token).map(([k, v]) => [fromText(k), fromText(v)]),
+        Object.entries(token).map(([k, v]) => [fromText(k), fromText(v)])
       ),
       version: 1n,
       extra: [],
@@ -131,7 +131,7 @@ export async function mint(
           [refUnit]: 1n,
           [usrUnit]: 1n,
         },
-        redeemer,
+        redeemer
       )
       .attach.MintingPolicy(Script.Cip68)
       .pay.ToContract(
@@ -139,7 +139,7 @@ export async function mint(
         { kind: "inline", value: datum },
         {
           [refUnit]: 1n,
-        },
+        }
       )
       .validTo(new Date().getTime() + 15 * 60_000) // 15 minutes
       .complete();
@@ -164,7 +164,7 @@ export async function mint(
 
 export async function update(
   token: { name: string; image: string; utxo: UTxO; assetName: string },
-  { lucid, walletApi, address }: WalletConnection,
+  { lucid, walletApi, address }: WalletConnection
 ) {
   try {
     if (!lucid) throw "Uninitialized Lucid";
@@ -176,8 +176,8 @@ export async function update(
     const cip68: Cip68Metadatum = {
       metadata: new Map(
         Object.entries({ name: token.name, image: token.image }).map(
-          ([k, v]) => [fromText(k), fromText(v)],
-        ),
+          ([k, v]) => [fromText(k), fromText(v)]
+        )
       ),
       version: 1n,
       extra: [],
@@ -195,7 +195,7 @@ export async function update(
     const redeemer: RedeemerBuilder = {
       inputs,
       kind: "selected",
-      makeRedeemer: (usrTokenInputIdx) => {
+      makeRedeemer: usrTokenInputIdx => {
         const updateAction = new Constr(1, usrTokenInputIdx);
 
         return Data.to(updateAction);
@@ -211,7 +211,7 @@ export async function update(
         { kind: "inline", value: datum },
         {
           [refUnit]: 1n,
-        },
+        }
       )
       .validTo(new Date().getTime() + 15 * 60_000) // 15 minutes
       .complete();
@@ -236,7 +236,7 @@ export async function update(
 
 export async function burn(
   token: { name: string; image: string; utxo: UTxO; assetName: string },
-  { lucid, walletApi, address }: WalletConnection,
+  { lucid, walletApi, address }: WalletConnection
 ) {
   try {
     if (!lucid) throw "Uninitialized Lucid";
@@ -261,7 +261,7 @@ export async function burn(
           [refUnit]: -1n,
           [usrUnit]: -1n,
         },
-        redeemer,
+        redeemer
       )
       .attach.Script(Script.Cip68)
       .validTo(new Date().getTime() + 15 * 60_000) // 15 minutes

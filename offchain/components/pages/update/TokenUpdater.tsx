@@ -45,9 +45,13 @@ export default function TokenUpdater() {
 
   if (!tokens)
     return (
-      <div className="flex flex-col text-center gap-4 w-[32rem] max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+      <div className="flex w-[32rem] max-w-xs flex-col gap-4 text-center sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
         <span className="mt-8">Looking for known tokens in your wallet</span>
-        <Progress isIndeterminate aria-label="Loading..." className="w-full" />
+        <Progress
+          isIndeterminate
+          aria-label="Loading..."
+          className="w-full"
+        />
         <span className="mb-8">Please wait...</span>
       </div>
     );
@@ -56,7 +60,12 @@ export default function TokenUpdater() {
     return (
       <span className="my-2">
         No known token was found,&nbsp;
-        <Chip as={Link} color="primary" href={"/mint"} variant="shadow">
+        <Chip
+          as={Link}
+          color="primary"
+          href={"/mint"}
+          variant="shadow"
+        >
           mint
         </Chip>
         &nbsp;a token instead?
@@ -83,18 +92,18 @@ export default function TokenUpdater() {
                 isBlurred
                 isZoomed
                 alt={token.name}
-                className="object-cover size-[140px]"
+                className="size-[140px] object-cover"
                 radius="lg"
                 shadow="sm"
                 src={token.image}
                 width="100%"
               />
             </CardBody>
-            <CardFooter className="flex group text-small justify-between w-[140px]">
-              <b className="text-ellipsis overflow-clip whitespace-nowrap min-w-0 shrink">
+            <CardFooter className="group flex w-[140px] justify-between text-small">
+              <b className="min-w-0 shrink overflow-clip text-ellipsis whitespace-nowrap">
                 {token.name}
               </b>
-              <EditIcon className="text-green-500 shrink-0 group-hover:scale-125 transition-transform ease-linear" />
+              <EditIcon className="shrink-0 text-green-500 transition-transform ease-linear group-hover:scale-125" />
             </CardFooter>
           </Card>
         ))}
@@ -111,9 +120,9 @@ export default function TokenUpdater() {
           onOpenChange={onOpenChange}
         >
           <ModalContent>
-            {(onClose) => (
+            {onClose => (
               <Form
-                onSubmit={async (e) => {
+                onSubmit={async e => {
                   e.preventDefault();
 
                   const data = new FormData(e.currentTarget);
@@ -122,12 +131,12 @@ export default function TokenUpdater() {
                   setIsUpdating(() => true);
                   const newToken = await update(
                     { ...selectedToken, ...updatedToken },
-                    walletConnection,
+                    walletConnection
                   );
 
                   if (newToken) {
-                    setTokens((tokens) => {
-                      return tokens?.map((token) => {
+                    setTokens(tokens => {
+                      return tokens?.map(token => {
                         return token.assetName === selectedToken.assetName
                           ? newToken
                           : token;
@@ -139,10 +148,10 @@ export default function TokenUpdater() {
                   setIsUpdating(() => false);
                 }}
               >
-                <ModalHeader className="flex flex-col gap-1 w-full text-center">
+                <ModalHeader className="flex w-full flex-col gap-1 text-center">
                   Update NFT
                 </ModalHeader>
-                <ModalBody className="w-full min-w-[32rem] flex flex-col gap-4">
+                <ModalBody className="flex w-full min-w-[32rem] flex-col gap-4">
                   <Input
                     isRequired
                     defaultValue={selectedToken.name}
@@ -178,7 +187,11 @@ export default function TokenUpdater() {
                   >
                     Cancel
                   </Button>
-                  <Button color="primary" isLoading={isUpdating} type="submit">
+                  <Button
+                    color="primary"
+                    isLoading={isUpdating}
+                    type="submit"
+                  >
                     Update
                   </Button>
                 </ModalFooter>

@@ -52,7 +52,7 @@ export default function WalletConnectors() {
       const stakeAddress = (await lucid.wallet().rewardAddress()) ?? "";
       const skh = stakeAddress ? stakeCredentialOf(stakeAddress).hash : "";
 
-      setWalletConnection((walletConnection) => {
+      setWalletConnection(walletConnection => {
         return {
           ...walletConnection,
           wallet,
@@ -70,20 +70,28 @@ export default function WalletConnectors() {
 
   if (!wallets)
     return (
-      <Snippet hideCopyButton hideSymbol variant="bordered">
+      <Snippet
+        hideCopyButton
+        hideSymbol
+        variant="bordered"
+      >
         <Spinner label="Browsing Cardano Wallets" />
       </Snippet>
     );
 
   if (!wallets.length)
     return (
-      <Snippet hideCopyButton hideSymbol variant="bordered">
+      <Snippet
+        hideCopyButton
+        hideSymbol
+        variant="bordered"
+      >
         <p className="uppercase">No Cardano Wallet</p>
       </Snippet>
     );
 
   return (
-    <div className="flex flex-col gap-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6">
+    <div className="flex w-full flex-col gap-4 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6">
       {wallets.map((wallet, w) => (
         <Skeleton
           key={`wallet.${w}`}

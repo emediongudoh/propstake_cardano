@@ -23,8 +23,8 @@ export default function Home() {
     else isInit = true;
 
     Lucid(provider, network)
-      .then((lucid) => {
-        setWalletConnection((walletConnection) => {
+      .then(lucid => {
+        setWalletConnection(walletConnection => {
           return { ...walletConnection, lucid };
         });
       })
@@ -36,26 +36,29 @@ export default function Home() {
       <section className="relative flex flex-col items-center justify-center gap-4 py-8 md:py-10">
         <ConnectedDashboard />
         <DisconnectButton />
-        <ToastContainer position="bottom-right" theme="dark" />
+        <ToastContainer
+          position="bottom-right"
+          theme="dark"
+        />
       </section>
     );
 
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       {/* Title */}
-      <div className="inline-block max-w-xl text-center justify-center">
+      <div className="inline-block max-w-xl justify-center text-center">
         <span className={title()}>Connect&nbsp;</span>
         <span className={title({ color: "violet" })}>Cardano&nbsp;</span>
         <span className={title()}>Wallet</span>
       </div>
 
       {/* Wallet Connectors */}
-      <div className="flex justify-center mt-4 w-full">
+      <div className="mt-4 flex w-full justify-center">
         <WalletConnectors />
       </div>
 
       {/* Subtitle */}
-      <div className="inline-block max-w-xl text-center justify-center">
+      <div className="inline-block max-w-xl justify-center text-center">
         <div className={subtitle({ class: "mt-4" })}>
           See the{" "}
           <Link
@@ -70,7 +73,10 @@ export default function Home() {
       </div>
 
       {/* Toast */}
-      <ToastContainer position="bottom-right" theme="dark" />
+      <ToastContainer
+        position="bottom-right"
+        theme="dark"
+      />
     </section>
   );
 }

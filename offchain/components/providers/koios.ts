@@ -13,7 +13,7 @@ export const koios = {
   queryAddressAssets: async (address: Address, byPolicyID: PolicyId) => {
     const assets = await post(
       "/koios/address_assets?select=policy_id,asset_name",
-      { _addresses: [address] },
+      { _addresses: [address] }
     );
 
     return assets

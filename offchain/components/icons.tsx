@@ -14,8 +14,14 @@ export const Logo: React.FC<IconSvgProps> = ({
     width={size || width}
     {...props}
   >
-    <g data-name="Layer 2" id="Layer_2">
-      <g data-name="Layer 1" id="Layer_1-2">
+    <g
+      data-name="Layer 2"
+      id="Layer_2"
+    >
+      <g
+        data-name="Layer 1"
+        id="Layer_1-2"
+      >
         <path
           d="M102.76,172a25.31,25.31,0,0,0,23.78,26.65c.49,0,1,0,1.46,0A25.26,25.26,0,1,0,102.76,172Z"
           fill="#fff"

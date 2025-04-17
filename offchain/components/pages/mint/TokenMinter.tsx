@@ -27,8 +27,8 @@ export default function TokenMinter() {
   return (
     <>
       <Form
-        className="w-full min-w-[32rem] flex flex-col gap-4"
-        onSubmit={(e) => {
+        className="flex w-full min-w-[32rem] flex-col gap-4"
+        onSubmit={e => {
           e.preventDefault();
 
           const data = new FormData(e.currentTarget);
@@ -61,11 +61,17 @@ export default function TokenMinter() {
           type="url"
         />
 
-        <div className="flex justify-center w-full gap-2">
-          <Button color="primary" type="submit">
+        <div className="flex w-full justify-center gap-2">
+          <Button
+            color="primary"
+            type="submit"
+          >
             Preview
           </Button>
-          <Button type="reset" variant="flat">
+          <Button
+            type="reset"
+            variant="flat"
+          >
             Reset
           </Button>
         </div>
@@ -81,13 +87,18 @@ export default function TokenMinter() {
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          {(onClose) => (
+          {onClose => (
             <>
-              <ModalHeader className="flex flex-col gap-1 w-full text-center">
+              <ModalHeader className="flex w-full flex-col gap-1 text-center">
                 {token.name}
               </ModalHeader>
               <ModalBody className="items-center">
-                <Image isBlurred isZoomed alt={token.name} src={token.image} />
+                <Image
+                  isBlurred
+                  isZoomed
+                  alt={token.name}
+                  src={token.image}
+                />
               </ModalBody>
               <ModalFooter>
                 <Button

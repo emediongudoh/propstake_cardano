@@ -17,19 +17,22 @@ export default function Burn() {
   return (
     <>
       {/* Title */}
-      <div className="inline-block max-w-lg text-center justify-center">
+      <div className="inline-block max-w-lg justify-center text-center">
         <h1 className={title()}>
           {"CS'25 NFT"}&nbsp;
           <span className={title({ color: "violet" })}>Burner</span>
         </h1>
       </div>
 
-      <div className="flex flex-col items-center gap-4 mt-4">
+      <div className="mt-4 flex flex-col items-center gap-4">
         <TokenBurner />
         <Link href="/">&laquo; Go Back</Link>
       </div>
 
-      <ToastContainer position="bottom-right" theme="dark" />
+      <ToastContainer
+        position="bottom-right"
+        theme="dark"
+      />
       <DisconnectButton />
     </>
   );

@@ -11,7 +11,7 @@ export default function ConnectedDashboard() {
   const [{ wallet, address }] = useWallet();
 
   return (
-    <div className="flex flex-col text-center justify-center">
+    <div className="flex flex-col justify-center text-center">
       {/* Title */}
       <h1 className={title()}>
         Welcome,{" "}
@@ -23,36 +23,57 @@ export default function ConnectedDashboard() {
 
       {/* Subtitle */}
       <div className="mx-auto mt-4">
-        <Snippet hideSymbol variant="bordered">
+        <Snippet
+          hideSymbol
+          variant="bordered"
+        >
           {address}
         </Snippet>
       </div>
 
       {/* Information */}
-      <div className="w-fit max-w-lg mx-auto mt-8 pt-3 pb-4 space-y-0.5">
+      <div className="mx-auto mt-8 w-fit max-w-lg space-y-0.5 pb-4 pt-3">
         This is the{" "}
         <span className={title({ color: "violet", className: "!text-base" })}>
           {"Cardano Sandbox '25"}
         </span>{" "}
         capstone project, where you can&nbsp;
-        <Chip as={Link} color="primary" href={"/mint"} variant="shadow">
+        <Chip
+          as={Link}
+          color="primary"
+          href={"/mint"}
+          variant="shadow"
+        >
           mint
         </Chip>
         ,&nbsp;
-        <Chip as={Link} color="success" href={"/update"} variant="shadow">
+        <Chip
+          as={Link}
+          color="success"
+          href={"/update"}
+          variant="shadow"
+        >
           update
         </Chip>
         , or&nbsp;
-        <Chip as={Link} color="danger" href={"/burn"} variant="shadow">
+        <Chip
+          as={Link}
+          color="danger"
+          href={"/burn"}
+          variant="shadow"
+        >
           burn
         </Chip>
         {" your "}
-        <Popover backdrop="blur" placement="top">
+        <Popover
+          backdrop="blur"
+          placement="top"
+        >
           <PopoverTrigger>
             <Link
               className={title({
                 color: "violet",
-                className: "!text-base cursor-pointer",
+                className: "cursor-pointer !text-base",
               })}
               title="Click for Policy ID"
             >
@@ -62,7 +83,10 @@ export default function ConnectedDashboard() {
           <PopoverContent>
             <div className="px-1 py-2">
               <div className="text-small font-bold">Policy ID</div>
-              <Snippet hideSymbol variant="bordered">
+              <Snippet
+                hideSymbol
+                variant="bordered"
+              >
                 {Script.PolicyID}
               </Snippet>
             </div>

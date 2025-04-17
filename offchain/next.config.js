@@ -9,7 +9,7 @@ const nextConfig = {
     ];
   },
 
-  webpack: (config) => {
+  webpack: config => {
     config.experiments = {
       ...config.experiments,
       asyncWebAssembly: true,

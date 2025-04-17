@@ -6,7 +6,7 @@ export default function DisconnectButton() {
   const [, setWalletConnection] = useWallet();
 
   function disconnect() {
-    setWalletConnection((walletConnection) => {
+    setWalletConnection(walletConnection => {
       return {
         ...walletConnection,
 
@@ -24,7 +24,7 @@ export default function DisconnectButton() {
 
   return (
     <Button
-      className="absolute top-0 right-0 -translate-y-full"
+      className="absolute right-0 top-0 -translate-y-full"
       onPress={disconnect}
     >
       Disconnect

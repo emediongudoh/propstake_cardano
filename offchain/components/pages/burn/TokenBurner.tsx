@@ -42,9 +42,13 @@ export default function TokenBurner() {
 
   if (!tokens)
     return (
-      <div className="flex flex-col text-center gap-4 w-[32rem] max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+      <div className="flex w-[32rem] max-w-xs flex-col gap-4 text-center sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
         <span className="mt-8">Looking for known tokens in your wallet</span>
-        <Progress isIndeterminate aria-label="Loading..." className="w-full" />
+        <Progress
+          isIndeterminate
+          aria-label="Loading..."
+          className="w-full"
+        />
         <span className="mb-8">Please wait...</span>
       </div>
     );
@@ -53,7 +57,12 @@ export default function TokenBurner() {
     return (
       <span className="my-2">
         No known token was found,&nbsp;
-        <Chip as={Link} color="primary" href={"/mint"} variant="shadow">
+        <Chip
+          as={Link}
+          color="primary"
+          href={"/mint"}
+          variant="shadow"
+        >
           mint
         </Chip>
         &nbsp;a token instead?
@@ -80,18 +89,18 @@ export default function TokenBurner() {
                 isBlurred
                 isZoomed
                 alt={token.name}
-                className="object-cover size-[140px]"
+                className="size-[140px] object-cover"
                 radius="lg"
                 shadow="sm"
                 src={token.image}
                 width="100%"
               />
             </CardBody>
-            <CardFooter className="flex group text-small justify-between w-[140px]">
-              <b className="text-ellipsis overflow-clip whitespace-nowrap min-w-0 shrink">
+            <CardFooter className="group flex w-[140px] justify-between text-small">
+              <b className="min-w-0 shrink overflow-clip text-ellipsis whitespace-nowrap">
                 {token.name}
               </b>
-              <DeleteIcon className="text-red-500 shrink-0 group-hover:scale-125 transition-transform ease-linear" />
+              <DeleteIcon className="shrink-0 text-red-500 transition-transform ease-linear group-hover:scale-125" />
             </CardFooter>
           </Card>
         ))}
@@ -108,9 +117,9 @@ export default function TokenBurner() {
           onOpenChange={onOpenChange}
         >
           <ModalContent>
-            {(onClose) => (
+            {onClose => (
               <>
-                <ModalHeader className="flex flex-col gap-1 w-full text-center">
+                <ModalHeader className="flex w-full flex-col gap-1 text-center">
                   {selectedToken.name}
                 </ModalHeader>
                 <ModalBody className="items-center">
@@ -137,10 +146,10 @@ export default function TokenBurner() {
                       setIsBurning(() => true);
                       await burn(selectedToken, walletConnection);
 
-                      setTokens((tokens) => {
+                      setTokens(tokens => {
                         return tokens?.filter(
                           ({ assetName }) =>
-                            assetName !== selectedToken.assetName,
+                            assetName !== selectedToken.assetName
                         );
                       });
 
